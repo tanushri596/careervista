@@ -30,15 +30,15 @@ public class Education
     @JoinColumn(name="user_id")
     private User user;
 
-    @Override
-    public String toString() {
-        return "Education{" +
-                "id=" + id +
-                ", institution='" + institution + '\'' +
-                ", marks=" + marks +
-                ", StartTime=" + startTime +
-                ", endTime=" + endTime +
-                ", user=" + user +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Education{" +
+//                "id=" + id +
+//                ", institution='" + institution + '\'' +
+//                ", marks=" + marks +
+//                ", StartTime=" + startTime +
+//                ", endTime=" + endTime +
+//                ", user=" + user +
+//                '}';
+//    }
 }

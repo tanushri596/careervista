@@ -10,6 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+@NamedQuery(name="User.findByEmailId",query="select u from User u where u.email=:email")
+
+
 @Entity
 @Table(name="_user")
 @Data
@@ -22,13 +25,11 @@ public class User
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String availability;
-
     private byte[] image;
     private String email;
     private String password;
 
-    private Integer phone_number;
+    private String phoneNumber;
 
 //    @Override
 //    public String toString() {
@@ -45,7 +46,6 @@ public class User
 //                ", roles=" + roles +
 //                '}';
 //    }
-
     @ManyToOne
     @JoinColumn(name="company_id")
     private Company company;
@@ -75,5 +75,7 @@ public class User
             }
     )
     private Set<Role> roles;
+
+
 
 }

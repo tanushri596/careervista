@@ -2,17 +2,27 @@ package com.example.careerVista.controller;
 
 import com.example.careerVista.entity.*;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin
 @RestController
-public interface CandidateController {
+@RequestMapping(path="/candidate")
+public interface CandidateController
+{
 
+    @PostMapping({"/signUp"})
+    public ResponseEntity<String> signUp(@RequestBody Map<String,String> requestMap);
+
+    // User APIs
     @PostMapping({"/createUser"})
     public void createUser(@RequestBody User user);
+    @DeleteMapping({"/deleteUser/{userId}"})
+    public void deleteUser(@PathVariable Integer userId);
 
 //    Education APIs
 
@@ -49,6 +59,11 @@ public interface CandidateController {
     public List<Applications> getApplicationsByUserId(@PathVariable Integer userId);
     @GetMapping({"/getApplicationsByJobId/{jobId}"})
     public List<Applications> getApplicationsByJobId(@PathVariable Integer jobId);
+    @PatchMapping({"/updateApplicationActivity/{applicationId}"})
+    public void updateApplicationActivity(@RequestBody Boolean active,@PathVariable Integer applicationId);
+    @PatchMapping({"/updateApplicationStatus/{applicationId}"})
+    public void updateApplicationStatus(@RequestBody String status,@PathVariable Integer applicationId);
+
 
 
 // Job APIs

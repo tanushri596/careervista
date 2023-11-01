@@ -3,10 +3,14 @@ package com.example.careerVista.controllerImpl;
 import com.example.careerVista.controller.CandidateController;
 import com.example.careerVista.entity.*;
 import com.example.careerVista.service.CandidateService;
+import com.example.careerVista.utils.CareerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -15,11 +19,33 @@ public class CandidateControllerImpl implements CandidateController {
     @Autowired
      private CandidateService candidateService;
 
+    //user
+
+    @Override
+    public ResponseEntity<String> signUp(Map<String, String> requestMap)
+    {
+        try
+        {
+            return candidateService.signUp(requestMap);
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return CareerUtils.getResponseEntity("Failed to Signup", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @Override
     public void createUser(User user) {
 
       candidateService.addCandidate(user);
+    }
+
+    @Override
+    public void deleteUser(Integer userId)
+    {
+       candidateService.deleteCandidate(userId);
     }
 
 
@@ -68,7 +94,7 @@ public class CandidateControllerImpl implements CandidateController {
 
     @Override
     public List<Project> getProjectList(Integer userId) {
-       return candidateService.getProjects(userId);
+       return candidateService.getProjectsByUserId(userId);
     }
 
     @Override
@@ -93,6 +119,16 @@ public class CandidateControllerImpl implements CandidateController {
     @Override
     public List<Applications> getApplicationsByJobId(Integer jobId) {
         return candidateService.getApplicationsByJobId(jobId);
+    }
+
+    @Override
+    public void updateApplicationActivity(Boolean active,Integer applicationId) {
+     candidateService.updateApplicationActivity(active,applicationId);
+    }
+
+    @Override
+    public void updateApplicationStatus(String status,Integer applicationId) {
+        candidateService.updateApplicationStatus(status,applicationId);
     }
 
 

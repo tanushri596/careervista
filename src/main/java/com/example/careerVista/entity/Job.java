@@ -29,6 +29,6 @@ public class Job
 
    @ManyToOne
     @JoinColumn(name="user_id")
-    private User user;
+    private User user; // this indicates which user is posting the job
 
 }
