@@ -1,12 +1,21 @@
 package com.example.careerVista.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name="_user")
+@Data
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class User
 {
     @Id
@@ -21,12 +30,27 @@ public class User
 
     private Integer phone_number;
 
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", availability='" + availability + '\'' +
+//                ", image=" + Arrays.toString(image) +
+//                ", email='" + email + '\'' +
+//                ", password='" + password + '\'' +
+//                ", phone_number=" + phone_number +
+//                ", company=" + company +
+//                ", skills=" + skills +
+//                ", roles=" + roles +
+//                '}';
+//    }
+
     @ManyToOne
     @JoinColumn(name="company_id")
     private Company company;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch=FetchType.LAZY)
-    private List<Applications> applications;
+
 
     @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinTable(

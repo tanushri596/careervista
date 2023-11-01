@@ -1,10 +1,18 @@
 package com.example.careerVista.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Job
 {
     @Id
@@ -19,6 +27,8 @@ public class Job
    @JoinColumn(name="company_id")
    private Company company;
 
-    @OneToMany(mappedBy = "job",cascade = CascadeType.ALL,fetch=FetchType.LAZY)
-    private List<Applications> applications;
+   @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
 }
