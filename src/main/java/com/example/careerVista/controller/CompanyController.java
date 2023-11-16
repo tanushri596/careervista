@@ -18,8 +18,14 @@ public interface CompanyController
 //    @PostMapping(path="/signUp")
 //    public ResponseEntity<String> signUp(@RequestBody Map<String,String>requestMap);
 
-    @PostMapping({"/createCompany"})
-    public void createCompany(@RequestBody Company company);
+    @PostMapping("/signUp")
+    public ResponseEntity<String> signUp(@RequestBody Map<String,String> requestMap);
+
+    @PostMapping("/logIn")
+    public ResponseEntity<String> login (@RequestBody Map<String,String> requestMap);
+
+    @GetMapping("/getAllCompanies")
+    public List<Company> getAllCompanies();
 
     @DeleteMapping({"/deleteCompany/{compId}"})
     public void deleteCompany(@PathVariable Integer compId);

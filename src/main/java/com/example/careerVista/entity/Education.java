@@ -23,8 +23,8 @@ public class Education
 
     private Double marks;
 
-    private Date startTime;
-    private Date endTime;
+    private String startDate;
+    private String endDate;
 
     @ManyToOne
     @JoinColumn(name="user_id")

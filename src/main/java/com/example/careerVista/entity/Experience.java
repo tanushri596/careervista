@@ -19,11 +19,10 @@ public class Experience
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String company;
-
+    private String role;
     private String description;
-
-    private Date startTime;
-    private Date endTime;
+    private String startDate;
+    private String endDate;
 
     @ManyToOne
     @JoinColumn(name="user_id")

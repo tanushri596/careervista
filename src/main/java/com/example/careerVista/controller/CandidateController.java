@@ -1,5 +1,7 @@
 package com.example.careerVista.controller;
 
+import com.example.careerVista.dto.UserLogDto;
+import com.example.careerVista.dto.UserSignDto;
 import com.example.careerVista.entity.*;
 
 import org.springframework.http.ResponseEntity;
@@ -15,12 +17,21 @@ import java.util.Optional;
 public interface CandidateController
 {
 
-    @PostMapping({"/signUp"})
-    public ResponseEntity<String> signUp(@RequestBody Map<String,String> requestMap);
-
     // User APIs
-    @PostMapping({"/createUser"})
-    public void createUser(@RequestBody User user);
+    @PostMapping("/signUp")
+    public ResponseEntity<String> signUp(@RequestBody UserSignDto requestMap);
+
+
+    @PostMapping("/logIn")
+    public ResponseEntity<String> login (@RequestBody UserLogDto requestMap);
+
+    @GetMapping("/getAllCandidates")
+    public List<User> getAllUsers();
+
+    @GetMapping("/getCandidateByUsername/{username}")
+    public User getCandidate(@PathVariable String username);
+
+
     @DeleteMapping({"/deleteUser/{userId}"})
     public void deleteUser(@PathVariable Integer userId);
 
@@ -70,6 +81,8 @@ public interface CandidateController
 
     @PostMapping({"/addJob"})
     public void addJob(@RequestBody Job job);
+    @GetMapping({"/getAllJobs"})
+    public List<Job> getAllJobs();
     @GetMapping({"/getJobsByUserId/{userId}"})
     public List<Job> getAllJobsByUserId(@PathVariable Integer userId);
     @DeleteMapping({"/deleteJob/{id}"})

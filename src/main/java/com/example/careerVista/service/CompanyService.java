@@ -4,14 +4,19 @@ import com.example.careerVista.entity.Applications;
 import com.example.careerVista.entity.Company;
 import com.example.careerVista.entity.Job;
 import com.example.careerVista.entity.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface CompanyService
 {
-  public void addCompany(Company company);
+  ResponseEntity<String> signUp(Map<String, String> requestMap);
+  ResponseEntity<String> logIn(Map<String, String> requestMap);
+
+  List<Company> getAllCompanies();
   public List<Job> getJobs(Integer compId);
 
   public List<Applications> getApplications(Integer jobId);
@@ -20,4 +25,7 @@ public interface CompanyService
   public void deleteCompany(Integer compId);
 
   void updateApplicationStatusByCompany(String status, Integer applicationId);
+
+
+
 }

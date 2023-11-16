@@ -19,11 +19,14 @@ public class Company
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private byte[] image;
-    private String email;
-    private Integer no_of_employees;
+    private String username;
+    private String password;
+//    private Integer no_of_employees;
     private String ceoName;
-    private String description;
+//    private String description;
+    private String phoneNumber;
+    private String foundingDate;
+    private String role;
 
 
 

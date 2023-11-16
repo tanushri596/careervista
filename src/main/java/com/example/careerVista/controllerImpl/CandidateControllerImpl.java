@@ -1,6 +1,8 @@
 package com.example.careerVista.controllerImpl;
 
 import com.example.careerVista.controller.CandidateController;
+import com.example.careerVista.dto.UserLogDto;
+import com.example.careerVista.dto.UserSignDto;
 import com.example.careerVista.entity.*;
 import com.example.careerVista.service.CandidateService;
 import com.example.careerVista.utils.CareerUtils;
@@ -22,7 +24,7 @@ public class CandidateControllerImpl implements CandidateController {
     //user
 
     @Override
-    public ResponseEntity<String> signUp(Map<String, String> requestMap)
+    public ResponseEntity<String> signUp(UserSignDto requestMap)
     {
         try
         {
@@ -37,10 +39,30 @@ public class CandidateControllerImpl implements CandidateController {
     }
 
     @Override
-    public void createUser(User user) {
+    public ResponseEntity<String> login(UserLogDto requestMap) {
+        try
+        {
+            return candidateService.logIn(requestMap);
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
 
-      candidateService.addCandidate(user);
+        return CareerUtils.getResponseEntity("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
+
+    @Override
+    public List<User> getAllUsers() {
+        return candidateService.getAllUsers();
+    }
+
+    @Override
+    public User getCandidate(String username) {
+        return candidateService.getCandidate(username);
+    }
+
 
     @Override
     public void deleteUser(Integer userId)
@@ -138,6 +160,11 @@ public class CandidateControllerImpl implements CandidateController {
     public void addJob(Job job)
     {
       candidateService.addJob(job);
+    }
+
+    @Override
+    public List<Job> getAllJobs() {
+        return candidateService.getAllJobs();
     }
 
     @Override

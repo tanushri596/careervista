@@ -7,10 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-@NamedQuery(name="User.findByEmailId",query="select u from User u where u.email=:email")
+//@NamedQuery(name="User.findByUsername",query="select u from User u where u.username=:username")
 
 
 @Entity
@@ -24,12 +25,16 @@ public class User
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private byte[] image;
-    private String email;
+    private String firstName;
+    private String lastName;
+    private String username;
     private String password;
-
+    private String role;
     private String phoneNumber;
+    private String birthDate;
+    private String designation;
+
+
 
 //    @Override
 //    public String toString() {
@@ -52,29 +57,20 @@ public class User
 
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinTable(
-            name="USER_SKILL",
-            joinColumns = {
-                    @JoinColumn(name="USER_ID")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name="SKILL_ID")
-            }
-    )
-    private Set<Skills> skills;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinTable(
-            name="USER_ROLE",
-            joinColumns = {
-                    @JoinColumn(name="USER_ID")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name="ROLE_ID")
-            }
-    )
-    private Set<Role> roles;
+
+
+//    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+//    @JoinTable(
+//            name="USER_ROLE",
+//            joinColumns = {
+//                    @JoinColumn(name="USER_ID")
+//            },
+//            inverseJoinColumns = {
+//                    @JoinColumn(name="ROLE_ID")
+//            }
+//    )
+//    private Set<Role> roles;
 
 
 

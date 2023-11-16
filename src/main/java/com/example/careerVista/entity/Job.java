@@ -22,12 +22,12 @@ public class Job
    private String description;
    private Integer vacancy;
    private Integer salary;
+   private String location;
 
    @ManyToOne
    @JoinColumn(name="company_id")
    private Company company;
-
-   @ManyToOne
+    @ManyToOne
     @JoinColumn(name="user_id")
     private User user; // this indicates which user is posting the job
 

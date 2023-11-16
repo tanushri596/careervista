@@ -6,21 +6,56 @@ import com.example.careerVista.entity.Company;
 import com.example.careerVista.entity.Job;
 import com.example.careerVista.entity.User;
 import com.example.careerVista.service.CompanyService;
+import com.example.careerVista.utils.CareerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CompanyControllerImpl implements CompanyController {
 
     @Autowired
     private CompanyService companyService;
+
     @Override
-    public void createCompany(Company company)
-    {
-       companyService.addCompany(company);
+    public ResponseEntity<String> signUp(Map<String, String> requestMap) {
+        try
+        {
+            return companyService.signUp(requestMap);
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return CareerUtils.getResponseEntity("Failed to Signup", HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
+    @Override
+    public ResponseEntity<String> login(Map<String, String> requestMap) {
+        try
+        {
+            return companyService.logIn(requestMap);
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return CareerUtils.getResponseEntity("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+
+
+    }
+
+    @Override
+    public List<Company> getAllCompanies() {
+        return companyService.getAllCompanies();
     }
 
     @Override
