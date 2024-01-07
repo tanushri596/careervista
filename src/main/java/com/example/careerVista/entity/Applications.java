@@ -1,5 +1,8 @@
 package com.example.careerVista.entity;
 
+import com.example.careerVista.dto.CompanyDto;
+import com.example.careerVista.dto.JobDto;
+import com.example.careerVista.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,12 +19,21 @@ public class Applications
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String role;
+
     private String status;
     private Boolean active;
+    private Boolean withdrawn;
+    private String applyDate;
+    private String companyName;
 
     @ManyToOne
     @JoinColumn(name="job_id")
     private Job job;
+
+    @ManyToOne
+    @JoinColumn(name="company_id")
+    private Company company;
 
     @ManyToOne
     @JoinColumn(name="user_id")

@@ -19,6 +19,7 @@ public class Education
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String courseName;
     private String institution;
 
     private Double marks;

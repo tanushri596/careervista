@@ -1,6 +1,9 @@
 package com.example.careerVista.controllerImpl;
 
 import com.example.careerVista.controller.CompanyController;
+import com.example.careerVista.dto.CompanyDto;
+import com.example.careerVista.dto.JobDto;
+import com.example.careerVista.dto.UserDto;
 import com.example.careerVista.entity.Applications;
 import com.example.careerVista.entity.Company;
 import com.example.careerVista.entity.Job;
@@ -54,6 +57,16 @@ public class CompanyControllerImpl implements CompanyController {
     }
 
     @Override
+    public boolean getCompanyViaUsername(String username) {
+        return companyService.getCompanyViaUsername(username);
+    }
+
+    @Override
+    public CompanyDto getCompanyByUsername(String username) {
+        return companyService.getCompanyByUsername(username);
+    }
+
+    @Override
     public List<Company> getAllCompanies() {
         return companyService.getAllCompanies();
     }
@@ -65,12 +78,18 @@ public class CompanyControllerImpl implements CompanyController {
     }
 
     @Override
-    public List<User> getEmployeesByCompanyId(Integer compId) {
+    public List<UserDto> getEmployeesByCompanyId(Integer compId) {
         return companyService.getEmployeesByCompanyId(compId);
     }
 
     @Override
-    public List<Job> getJobsByCompanyId(Integer compId) {
+    public void updateCandidateStatus(String status, Integer userId)
+    {
+      companyService.updateCandidateStatus(status,userId);
+    }
+
+    @Override
+    public List<JobDto> getJobsByCompanyId(Integer compId) {
         return companyService.getJobs(compId);
     }
 

@@ -4,6 +4,9 @@ import com.example.careerVista.Jwt.CompanyDetailsService;
 import com.example.careerVista.Jwt.JwtUtil;
 import com.example.careerVista.dao.*;
 import com.example.careerVista.dao.CompanyDao;
+import com.example.careerVista.dto.CompanyDto;
+import com.example.careerVista.dto.JobDto;
+import com.example.careerVista.dto.UserDto;
 import com.example.careerVista.entity.Applications;
 import com.example.careerVista.entity.Company;
 import com.example.careerVista.entity.Job;
@@ -22,10 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -139,18 +139,47 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<Job> getJobs(Integer compId) {
-        return jobDao.findAllByCompanyId(compId);
+    public List<JobDto> getJobs(Integer compId) {
+        List<JobDto> allTheJobs = new ArrayList<>();
+
+        List<Job> jobs = jobDao.findAllByCompanyId(compId);
+
+        jobs.forEach(job-> {
+                    allTheJobs.add(new JobDto(
+                            (Integer) job.getId(),
+                            (String) job.getRole(),
+                            (String) job.getDescription(),
+                            (Integer) job.getVacancy(),
+                            (Integer) job.getSalary(),
+                            (String) job.getLocation(),
+                            (String) job.getPostDate(),
+                            (Boolean) job.getStatus(),
+                            (Integer) job.getUser().getId(),
+                            (Integer) job.getCompany().getId(),
+                            (String) job.getCompany().getName()
+                    ));
+                }
+        );
+        return allTheJobs;
     }
 
     @Override
     public List<Applications> getApplications(Integer jobId) {
+
         return applicationsDao.findAllByJobId(jobId);
     }
 
     @Override
-    public List<User> getEmployeesByCompanyId(Integer compId) {
-        return userDao.findAllByCompanyId(compId);
+    public List<UserDto> getEmployeesByCompanyId(Integer compId)
+    {
+        List<User> users = userDao.findAllByCompanyId(compId);
+        List<UserDto> userDtos = new ArrayList<>();
+
+        users.forEach(user->
+        userDtos.add(new UserDto(user.getId(),user.getUsername(),user.getFirstName(),user.getLastName(),user.getPhoneNumber(),user.getRole(),user.getStatus(),user.getBirthDate(),user.getDesignation(),user.getCompany().getId())
+));
+
+        return userDtos;
     }
 
     @Override
@@ -171,7 +200,7 @@ public class CompanyServiceImpl implements CompanyService {
             for(Job job : jobs)
             {
                 Integer jobId = job.getId();
-                candidateService.deleteJobById(jobId);
+                candidateService.removeJobById(false,jobId);;
             }
 
             companyDao.deleteById(compId);
@@ -190,6 +219,36 @@ public class CompanyServiceImpl implements CompanyService {
             Applications application = userApplication.get();
             application.setStatus(status);
             applicationsDao.save(application);
+        }
+    }
+
+    @Override
+    public boolean getCompanyViaUsername(String username) {
+        Company company = companyDao.findAllByUsername(username);
+
+        if(company == null)
+            return false;
+        else return true;
+    }
+
+    @Override
+    public CompanyDto getCompanyByUsername(String username) {
+
+        Company company = companyDao.findAllByUsername(username);
+        CompanyDto companyDto = new CompanyDto(company.getId(),company.getName(),company.getCeoName(),company.getFoundingDate());
+        return companyDto;
+    }
+
+    @Override
+    public void updateCandidateStatus(String status, Integer userId)
+    {
+        Optional<User> user = userDao.findById(userId);
+
+        if(user.isPresent())
+        {
+            User user1 = user.get();
+            user1.setStatus(status);
+            userDao.save(user1);
         }
     }
 }

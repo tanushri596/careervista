@@ -30,6 +30,7 @@ public class User
     private String username;
     private String password;
     private String role;
+    private String status;
     private String phoneNumber;
     private String birthDate;
     private String designation;

@@ -13,22 +13,23 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class Job
-{
+public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Integer id;
-   private String role;
-   private String description;
-   private Integer vacancy;
-   private Integer salary;
-   private String location;
+    private Integer id;
+    private String role;
+    private String description;
+    private Integer vacancy;
+    private Integer salary;
+    private String location;
+    private String postDate;
+    private Boolean status;
 
-   @ManyToOne
-   @JoinColumn(name="company_id")
-   private Company company;
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "company_id")
+    private Company company;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user; // this indicates which user is posting the job
 
 }

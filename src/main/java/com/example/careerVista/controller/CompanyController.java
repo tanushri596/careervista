@@ -1,5 +1,8 @@
 package com.example.careerVista.controller;
 
+import com.example.careerVista.dto.CompanyDto;
+import com.example.careerVista.dto.JobDto;
+import com.example.careerVista.dto.UserDto;
 import com.example.careerVista.entity.Applications;
 import com.example.careerVista.entity.Company;
 import com.example.careerVista.entity.Job;
@@ -27,13 +30,25 @@ public interface CompanyController
     @GetMapping("/getAllCompanies")
     public List<Company> getAllCompanies();
 
+    @GetMapping("/getCompanyViaUsername/{username}")
+    public boolean getCompanyViaUsername(@PathVariable String username);
+
+    @GetMapping("/getCompanyByUsername/{username}")
+    public CompanyDto getCompanyByUsername(@PathVariable String username);
+
+
+
     @DeleteMapping({"/deleteCompany/{compId}"})
     public void deleteCompany(@PathVariable Integer compId);
 
     @GetMapping({"/getEmployees/{compId}"})
-    public List<User> getEmployeesByCompanyId(@PathVariable Integer compId);
+    public List<UserDto> getEmployeesByCompanyId(@PathVariable Integer compId);
+
+    @PatchMapping({"/updateCandidateStatus/{userId}"})
+    public void updateCandidateStatus(@RequestBody String status,@PathVariable Integer userId);
+
     @GetMapping({"/getJobs/{compId}"})
-    public List<Job> getJobsByCompanyId(@PathVariable Integer compId);
+    public List<JobDto> getJobsByCompanyId(@PathVariable Integer compId);
 
     @GetMapping({"/getApplications/{jobId}"})
     public List<Applications> getApplicationsByJobId(@PathVariable Integer jobId);

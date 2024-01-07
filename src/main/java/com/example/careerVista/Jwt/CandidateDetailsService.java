@@ -23,15 +23,15 @@ public class CandidateDetailsService implements UserDetailsService {
 
 
     @Autowired
-    private final UserDao userDao;
+    private  UserDao userDao;
 
     private User userDetail;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("Inside loadUserByUsername {}",username);
+       // log.info("Inside loadUserByUsername {}",username);
         userDetail = userDao.findAllByUsername(username);
-        log.info("inside loadUserByUsername {}",userDetail);
+      //  log.info("inside loadUserByUsername {}",userDetail);
         if (!Objects.isNull(userDetail))
             return new org.springframework.security.core.userdetails.User(userDetail.getUsername(), userDetail.getPassword()
                     , new ArrayList<>());//The User used is pre-built one.userDetail is the database one.

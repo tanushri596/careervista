@@ -1,24 +1,29 @@
 package com.example.careerVista.dto;
 
-import com.example.careerVista.entity.Company;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-public class UserSignDto
+@AllArgsConstructor
+public class UserDto
 {
     private Integer id;
+    private String username;
     private String firstName;
     private String lastName;
-    private String username;
-    private String password;
-    private String role;
     private String phoneNumber;
+    private String role;
+    private String status;
+
     private String birthDate;
     private String designation;
-    private Company company;
-    private String status;
+    private Integer companyId;
+
+
+
+
 }

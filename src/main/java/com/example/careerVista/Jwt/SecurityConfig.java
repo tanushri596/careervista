@@ -41,17 +41,30 @@ public class SecurityConfig {
     }
 
     @Bean
+    public JwtFilter jwtFilter() {
+        return new JwtFilter();
+    }
+
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         System.out.println("Filter chain called");
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()
+
+                        .requestMatchers("/candidate/logIn").permitAll()
+                        .requestMatchers("/candidate/signUp").permitAll()
+                        .requestMatchers("/company/logIn").permitAll()
+                        .requestMatchers("/company/signUp").permitAll()
+                       .requestMatchers("/stomp-endpoint/**").permitAll()
+                        .requestMatchers("/getMessage/**").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults());
-//        httpSecurity.addFilterBefore(new JwtFilter(jwtUtil, candidateDetailsService), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 
